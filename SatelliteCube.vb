@@ -314,7 +314,7 @@ Public Class RotatingCubePlugin
 
         Console.WriteLine(api.objectDictionary.Count)
         ' === Thin scene after all objects constructed ===
-        api.ThinEvenSpatiallyAdaptiveAuto(api.objectDictionary, Nothing, 10000, api.GetObserverOrigin(), 200, 50, 20)
+        api.ThinEvenSpatiallyAdaptiveAuto(api.objectDictionary, Nothing, 15000, api.GetObserverOrigin(), 200, 50, 1.5)
         Thread.Sleep(1000)
         Console.WriteLine(api.objectDictionary.Count)
 
@@ -1086,6 +1086,7 @@ Public Class RotatingCubePlugin
         Dim z = Math.Cos(phi)
         Return New Vector3(CSng(x), CSng(y), CSng(z))
     End Function
+
 
 
 
