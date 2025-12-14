@@ -61,3 +61,16 @@
   Parameter       | Default | Description
 ------------------|---------|-------------
  `CubeStructBase` | `55555` | Base structure ID for cube objects
+
+---
+
+&nbsp;&nbsp;Scene Thinning
+
+Thins the scene after construction to improve performance while preserving visual density near the observer.
+
+  Parameter          |Value |	Description
+---------------------|------|---------------
+ `numToLeave`        | 5000 |	Target object count after thinning
+ `keepRadius`        | 200  |	Objects within this distance always kept
+ `numBands`          | 1    |	Distance bands beyond keepRadius
+ `closeBiasExponent` | 1.5  |	Higher = more objects kept near observer
