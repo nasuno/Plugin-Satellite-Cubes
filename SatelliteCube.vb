@@ -4,7 +4,7 @@ Imports System.Numerics
 Imports System.Threading
 Imports Current.PluginApi
 
-<PluginMetadata("Satellite Cubes Plugin", "1.2", "nasuno", "Animated rotating 3D cube demo for plugin host, with randomly colored panel lines and circles. Supports multiple orbiting satellite cubes.")>
+<PluginMetadata("Satellite Cubes Plugin", "1.2", "nasuno", "Animated rotating 3D cube demo for plugin host, with randomly colored panel lines and circles. Now supports multiple orbiting satellite cubes.")>
 Public Class RotatingCubePlugin
     Implements IPlugin
 
@@ -59,7 +59,7 @@ Public Class RotatingCubePlugin
 
     ' Number of satellite cubes orbiting the main cube.
     ' Range: 0 or more. 0 = no satellites. Integer only.
-    Public satelliteCount As Integer = 8
+    Public satelliteCount As Integer = 7
 
     ' Fractional size of each satellite cube relative to main cube.
     ' Range: 0 < satelliteSizeRatio < 1. E.g. 1/3 for small satellites.
@@ -80,7 +80,7 @@ Public Class RotatingCubePlugin
     Private cubeRotations As New Dictionary(Of Integer, Quaternion)
 
     ' Collision immunity tracking
-    Private collisionImmunityTime As Double = 3.5 '0.3  ' 1 second immunity after collision
+    Private collisionImmunityTime As Double = 1.7 '0.3  ' 1 second immunity after collision
     Private collisionImmunity As New Dictionary(Of String, Double)  ' Key = "cube1Index_cube2Index", Value = timeWhenImmunityExpires
 
     Public Sub StopAnimation()
@@ -304,17 +304,35 @@ Public Class RotatingCubePlugin
 
 
 
+
+
+
+
+
+
+
+
         Console.WriteLine(api.objectDictionary.Count)
         ' === Thin scene after all objects constructed ===
-        api.ThinEvenSpatiallyAdaptiveAuto(
-            api.objectDictionary, Nothing, 5000,
-            api.GetObserverOrigin(), 200, 1, 1.5)
+        api.ThinEvenSpatiallyAdaptiveAuto(api.objectDictionary, Nothing, 10000, api.GetObserverOrigin(), 200, 50, 20)
+        Thread.Sleep(1000)
         Console.WriteLine(api.objectDictionary.Count)
 
         ' === Refresh each cube's ID lists to match surviving objects ===
         For Each cube In cubes
             cube.RefreshObjectIdsAfterThinning(api)
         Next
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -330,7 +348,7 @@ Public Class RotatingCubePlugin
                 If hadCollision Then
                     RunSeparationLoop(api)
                 Else
-                    Thread.Sleep(20)
+                    Thread.Sleep(40)
                 End If
             Catch ex As Exception
             End Try
