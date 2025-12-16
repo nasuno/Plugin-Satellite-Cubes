@@ -74,3 +74,11 @@ Thins the scene after construction to improve performance while preserving visua
  `keepRadius`        | 200  |	Objects within this distance always kept
  `numBands`          | 1    |	Distance bands beyond keepRadius
  `closeBiasExponent` | 1.5  |	Higher = more objects kept near observer
+
+---
+
+https://github.com/nasuno/Holodeck<br>
+https://github.com/nasuno/Holodeck_API<br>
+https://github.com/nasuno/Plugin-SpatialZone-Demo<br>
+https://github.com/nasuno/Plugin-Events<br>
+https://github.com/nasuno/Plugin-Menu-System
