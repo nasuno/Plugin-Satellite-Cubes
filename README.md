@@ -2,7 +2,7 @@
 
 <br><br>
 
-![](https://s12.gifyu.com/images/bE6qC.png)
+![](https://s12.gifyu.com/images/bE677.png)
 
 <br><br>
 
