@@ -11,15 +11,19 @@ Public Class RotatingCubePlugin
     ' --- Main Orbit/Rotation Configurables ---
     ' The 3D center point about which the main cube orbits.
     ' Typical range: Any Vector3 position in world units.
-    Private orbitCenter As Vector3 = New Vector3(-250, 155, -78)
+    'Private orbitCenter As Vector3 = New Vector3(-250, 155, -78)
+
+    ' --- Main Orbit/Rotation Configurables ---
+    ' The 3D center point about which the main cube orbits.
+    Private orbitCenter As Vector3
 
     ' The radius of the main cube's orbit around orbitCenter.
     ' Range: >0, in world units. Larger values mean a wider orbit.
-    Private orbitRadius As Double = 1700
+    Private orbitRadius As Double = 1500
 
     ' The angular speed of the main cube's orbit (radians/second).
     ' Range: >0. Lower values = slower orbit, higher = faster.
-    Private orbitSpeed As Double = Math.PI / 90
+    Private orbitSpeed As Double = Math.PI / 45
 
     ' The axis in 3D space about which the orbit plane tilts.
     ' Range: Any Vector3 (typically unit length).
@@ -59,15 +63,15 @@ Public Class RotatingCubePlugin
 
     ' Number of satellite cubes orbiting the main cube.
     ' Range: 0 or more. 0 = no satellites. Integer only.
-    Public satelliteCount As Integer = 7
+    Public satelliteCount As Integer = 5
 
     ' Fractional size of each satellite cube relative to main cube.
     ' Range: 0 < satelliteSizeRatio < 1. E.g. 1/3 for small satellites.
-    Private satelliteSizeRatio As Double = 1.0 / -1.5
+    Private satelliteSizeRatio As Double = 1.0 / 2
 
     ' Multiplier for satellite orbit radius (relative to their own side length).
     ' Range: >0. Higher = satellites orbit farther from main.
-    Private satelliteDistanceRatio As Double = 4.2
+    Private satelliteDistanceRatio As Double = 4.5
 
     Private Const CubeStructBase As Integer = 55555
     Private cubes As List(Of CubeInstance)
@@ -91,6 +95,22 @@ Public Class RotatingCubePlugin
     End Sub
 
     Public Sub Execute(api As ICurrentApi) Implements IPlugin.Execute
+
+        Dim leftCol As Integer = api.GetPanelFurthestLeftColumn(PanelType.WestPanel)
+        Dim rightCol As Integer = api.GetPanelFurthestRightColumn(PanelType.EastPanel)
+        Dim topRow As Integer = api.GetPanelFurthestTopRow(PanelType.TopPanel)
+        Dim bottomRow As Integer = api.GetPanelFurthestBottomRow(PanelType.BottomPanel)
+        Dim frontCol As Integer = api.GetPanelFurthestLeftColumn(PanelType.NorthPanel)
+        Dim backCol As Integer = api.GetPanelFurthestRightColumn(PanelType.SouthPanel)
+
+        Dim centerX As Integer = (leftCol + rightCol) \ 2
+        Dim centerY As Integer = (topRow + bottomRow) \ 2
+        Dim centerZ As Integer = (frontCol + backCol) \ 2
+
+        ' Assign orbit center dynamically
+        orbitCenter = New Vector3(centerX, centerY, centerZ)
+
+
         If animationThread IsNot Nothing AndAlso animationThread.IsAlive Then Return
         animationShouldRun = True
         animationThread = New Thread(Sub() AnimationLoop(api))
@@ -314,8 +334,7 @@ Public Class RotatingCubePlugin
 
         Console.WriteLine(api.objectDictionary.Count)
         ' === Thin scene after all objects constructed ===
-        api.ThinEvenSpatiallyAdaptiveAuto(api.objectDictionary, Nothing, 15000, api.GetObserverOrigin(), 200, 50, 1.5)
-        Thread.Sleep(1000)
+        api.ThinEvenSpatiallyAdaptiveAuto(api.objectDictionary, Nothing, 7500, api.GetObserverOrigin(), 200, 50, 0.2)
         Console.WriteLine(api.objectDictionary.Count)
 
         ' === Refresh each cube's ID lists to match surviving objects ===
@@ -1086,7 +1105,6 @@ Public Class RotatingCubePlugin
         Dim z = Math.Cos(phi)
         Return New Vector3(CSng(x), CSng(y), CSng(z))
     End Function
-
 
 
 
