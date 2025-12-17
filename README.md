@@ -10,8 +10,6 @@
 
 &nbsp;&nbsp;Satellite Cubes Plugin Configuration
 
-**IMPORTANT:** You must adjust `orbitCenter` coordinates to match your world space. 
-
 ---
 
 &nbsp;&nbsp;Orbit Settings
